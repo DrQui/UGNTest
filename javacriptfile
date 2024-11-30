@@ -1,7 +1,7 @@
 // Your Google Sheet ID
-const SHEET_ID = "YOUR_GOOGLE_SHEET_ID";
-const API_KEY = "YOUR_GOOGLE_API_KEY";
-const SHEET_RANGE = "Sheet1"; // Name of the sheet/tab
+const SHEET_ID = "10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U";
+const API_KEY = "AIzaSyBPYtzf_E8mcQ1yzoh_KcocT87CTslTruE";
+const SHEET_RANGE = "UGN Mission Partners";
 
 // Fetch data from Google Sheets
 async function fetchSheetData() {
