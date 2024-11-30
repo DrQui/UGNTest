@@ -19,43 +19,29 @@ function initMap() {
     zoom: 10,
   });
 
-  fetchSheetData().then((rows) => {
-    rows.slice(1).forEach((row) => {
-      const [name, address, type, iconUrl, imageUrl] = row;
+fetch(sheetUrl)
+  .then(response => response.text())
+  .then(data => {
+    console.log("Fetched data:", data); // Add this to debug
+    const json = JSON.parse(data.substring(47).slice(0, -2)); // Parse JSON
+    const rows = json.table.rows;
 
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ address }, (results, status) => {
-        if (status === "OK") {
-          const position = results[0].geometry.location;
+    rows.forEach(row => {
+      const name = row.c[0]?.v || "No name";
+      const lat = parseFloat(row.c[1]?.v);
+      const lng = parseFloat(row.c[2]?.v);
 
-          const marker = new google.maps.Marker({
-            position,
-            map,
-            title: name,
-            icon: iconUrl || getDefaultIcon(type),
-          });
-
-          const infoWindow = new google.maps.InfoWindow({
-            content: `
-              <div style="max-width: 300px;">
-                <strong>${name}</strong><br>
-                <em>Type:</em> ${type}<br>
-                <em>Address:</em> ${address}<br>
-                ${imageUrl ? `<img src="${imageUrl}" alt="${name}" style="width:100%; height:auto; margin-top:5px;">` : ""}
-              </div>
-            `,
-          });
-
-          marker.addListener("click", () => infoWindow.open(map, marker));
-
-          // Add marker to the array for filtering
-          markers.push({ marker, name, type, address });
-        } else {
-          console.error(`Geocode failed for ${address}: ${status}`);
-        }
-      });
+      // Only add markers if lat/lng are valid numbers
+      if (!isNaN(lat) && !isNaN(lng)) {
+        new google.maps.Marker({
+          position: { lat, lng },
+          map: map,
+          title: name,
+        });
+      }
     });
-  });
+  })
+  .catch(error => console.error("Error fetching sheet data:", error));
 
   // Add search functionality
   const searchInput = document.getElementById("search-input");
