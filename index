@@ -33,3 +33,7 @@
   <div id="map"></div>
 </body>
 </html>
+git add index.html
+git commit -m "Trigger redeployment"
+git push origin main
+
