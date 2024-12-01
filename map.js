@@ -6,7 +6,7 @@ let map;
 let geocoder;
 
 async function fetchSheetData() {
-  const sheetUrl = "https://docs.google.com/spreadsheets/d/10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U/gviz/tq?tqx=out:json&sheet=UGN%20Mission%20Partners";
+  const sheetUrl = "https://docs.google.com/spreadsheets/d/10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U";
 
   try {
     const response = await fetch(sheetUrl);
