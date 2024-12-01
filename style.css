@@ -15,6 +15,8 @@
   overflow: hidden; /* Prevent content from overflowing */
   font-family: Arial, sans-serif; /* Clean font */
   line-height: 1.5; /* Better line spacing */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Heading for mission partner name */
@@ -23,6 +25,7 @@
   font-size: 18px; /* Slightly larger font for name */
   font-weight: bold; /* Make the name stand out */
   color: #333; /* Dark color for the heading */
+  text-align: center; /* Center align the name */
 }
 
 /* Content inside info-box (links, description) */
