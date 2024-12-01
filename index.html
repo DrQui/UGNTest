@@ -9,104 +9,95 @@
       width: 100%;
       height: 90vh;
     }
-    #location-panel {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      width: 300px;
-      max-height: 80vh;
-      background: #fff;
-      border: 1px solid #ddd;
-      overflow-y: auto;
-      padding: 10px;
-      z-index: 1000;
-    }
-    #search-bar {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    #location-list {
-      list-style: none;
-      padding: 0;
-    }
-    #location-list li {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-      cursor: pointer;
-    }
-    #location-list li:hover {
-      background: #f0f0f0;
-    }
+    /* Add any other CSS you need here */
   </style>
 </head>
 <body>
+  <!-- Map Container -->
   <div id="map"></div>
+
+  <!-- Location Panel -->
   <div id="location-panel">
     <input type="text" id="search-bar" placeholder="Search locations...">
     <ul id="location-list"></ul>
   </div>
 
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPYtzf_E8mcQ1yzoh_KcocT87CTslTruE&callback=initMap"></script>
- 
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U/gviz/tq?tqx=out:json&sheet=UGN%20Mission%20Partners";
-    const markers = [];
+  <!-- Main JavaScript -->
+  <script>
+    // Define the initMap function before the Google Maps API loads
     let map;
+    const markers = [];
 
     function initMap() {
       map = new google.maps.Map(document.getElementById("map"), {
         zoom: 10,
-        center: { lat: 34.0522, lng: -118.2437 } // Los Angeles
+        center: { lat: 34.0522, lng: -118.2437 } // Default to Los Angeles
       });
 
-      fetch(sheetUrl)
-        .then(response => response.text())
-        .then(data => {
-          const json = JSON.parse(data.replace("/*O_o*/", "").trim().slice(47, -2));
-          const rows = json.table.rows;
-          const locationList = document.getElementById("location-list");
-
-          rows.forEach(row => {
-            const name = row.c[0]?.v || "No name";
-            const lat = parseFloat(row.c[1]?.v);
-            const lng = parseFloat(row.c[2]?.v);
-
-            if (!isNaN(lat) && !isNaN(lng)) {
-              const marker = new google.maps.Marker({
-                position: { lat, lng },
-                map: map,
-                title: name,
-              });
-
-              markers.push({ marker, title: name });
-
-              const listItem = document.createElement("li");
-              listItem.textContent = name;
-              listItem.addEventListener("click", () => {
-                map.setCenter({ lat, lng });
-                map.setZoom(14);
-              });
-              locationList.appendChild(listItem);
-            }
-          });
-        })
-        .catch(error => console.error("Error fetching sheet data:", error));
+      // Fetch and add markers to map here as you have done before
+      fetchSheetData();
     }
 
+    async function fetchSheetData() {
+      const sheetUrl = "https://docs.google.com/spreadsheets/d/10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U/gviz/tq?tqx=out:json&sheet=UGN%20Mission%20Partners";
+      const response = await fetch(sheetUrl);
+      const text = await response.text();
+      const json = JSON.parse(text.substring(47).slice(0, -2)); // Parse JSON response
+      const rows = json.table.rows;
+
+      const locationList = document.getElementById("location-list");
+
+      rows.forEach(row => {
+        const name = row.c[0]?.v || "No name";
+        const lat = parseFloat(row.c[1]?.v);
+        const lng = parseFloat(row.c[2]?.v);
+
+        if (!isNaN(lat) && !isNaN(lng)) {
+          // Add marker
+          const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: map,
+            title: name
+          });
+          markers.push(marker);
+
+          // Add list item
+          const listItem = document.createElement("li");
+          listItem.textContent = name;
+          listItem.addEventListener("click", () => {
+            map.setCenter({ lat, lng });
+            map.setZoom(14);
+          });
+          locationList.appendChild(listItem);
+        }
+      });
+    }
+
+    // Handle search functionality
     document.getElementById("search-bar").addEventListener("input", function () {
       const query = this.value.toLowerCase();
-      markers.forEach(({ marker, title }) => {
-        if (title.toLowerCase().includes(query)) {
-          marker.setMap(map);
-        } else {
-          marker.setMap(null);
+      markers.forEach(marker => marker.setMap(null)); // Clear all markers
+      const locationList = document.getElementById("location-list");
+      locationList.innerHTML = ""; // Clear the list
+
+      markers.forEach((marker, index) => {
+        if (marker.title.toLowerCase().includes(query)) {
+          marker.setMap(map); // Show filtered markers
+
+          // Add filtered locations to the list
+          const listItem = document.createElement("li");
+          listItem.textContent = marker.title;
+          listItem.addEventListener("click", () => {
+            map.setCenter(marker.getPosition());
+            map.setZoom(14);
+          });
+          locationList.appendChild(listItem);
         }
       });
     });
-
-    window.onload = initMap;
   </script>
+
+  <!-- Google Maps API (with async) -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPYtzf_E8mcQ1yzoh_KcocT87CTslTruE&callback=initMap"></script>
 </body>
 </html>
