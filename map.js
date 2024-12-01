@@ -63,18 +63,17 @@ function initMap() {
         const type = row.c[8]?.v || "default"; // Type column for custom icons
 
         const infoContent = `
-          <div style="max-width: 300px;">
-            <h3>${name}</h3>
-            <p><strong>Address:</strong> ${address}</p>
-            <p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>
-            <p><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-            <p><strong>Working Hours:</strong> ${hours}</p>
-            <p><strong>Description:</strong> ${description}</p>
-            ${image ? `<img src="${image}" alt="${name}" style="width:100%; max-height:150px; object-fit:cover;" />` : ""}
-          </div>
-        `;
-
+  <div style="max-width: 300px; padding: 15px; background-color: #f0f0f0; border: 1px solid black; border-radius: 8px;">
+    <h3 style="margin: 0;">${name}</h3>
+    <p><strong>Address:</strong> ${address}</p>
+    <p><strong>Website:</strong> <a href="${website}" target="_blank">${website}</a></p>
+    <p><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
+    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+    <p><strong>Working Hours:</strong> ${hours}</p>
+    <p><strong>Description:</strong> ${description}</p>
+    ${image ? `<img src="${image}" alt="${name}" style="width: 100%; height: auto; border-radius: 4px;" />` : ""}
+  </div>
+`;
         if (address) {
           geocodeAddress(address, name, infoContent, type);
         }
