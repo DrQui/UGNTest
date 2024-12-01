@@ -1,47 +1,109 @@
 /* Map container */
 #map {
   width: 100%;
-  height: 100vh; /* Adjust height to fit within the screen */
+  height: 100vh; /* Adjust height to fill the screen */
 }
 
-/* Location panel */
+/* Info box for mission partner details */
+.info-box {
+  max-width: 300px; /* Limit the width */
+  padding: 15px;
+  background-color: #f0f0f0; /* Light grey background */
+  border: 1px solid #333; /* Dark border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  overflow: hidden; /* Prevent content from overflowing */
+  font-family: Arial, sans-serif; /* Clean font */
+  line-height: 1.5; /* Better line spacing */
+}
+
+/* Heading for mission partner name */
+.info-box h3 {
+  margin-top: 0; /* Remove top margin */
+  font-size: 18px; /* Slightly larger font for name */
+  font-weight: bold; /* Make the name stand out */
+  color: #333; /* Dark color for the heading */
+}
+
+/* Content inside info-box (links, description) */
+.info-box p {
+  margin: 8px 0; /* Add spacing between paragraphs */
+  font-size: 14px; /* Smaller font for details */
+  color: #555; /* Light grey color for text */
+}
+
+/* Styling for links inside the info-box */
+.info-box a {
+  color: #007bff; /* Blue color for links */
+  text-decoration: none; /* Remove underline */
+}
+
+.info-box a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Style for the image inside the info box */
+.info-box img {
+  width: 100%; /* Make the image fill the width */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 4px; /* Rounded corners for the image */
+  margin-top: 10px; /* Add spacing between image and text */
+}
+
+/* Location list panel at the top (Search bar container) */
 #location-panel {
   position: fixed;
-  top: 10px; /* Move to the top */
+  top: 10px; /* Place it at the top */
   left: 50%;
-  transform: translateX(-50%); /* Center it horizontally */
-  width: 80%; /* Adjust width as needed */
-  max-width: 500px; /* Limit the width */
+  transform: translateX(-50%); /* Center the panel horizontally */
+  width: 80%; /* Limit the width */
+  max-width: 500px; /* Maximum width */
   background: #fff;
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  overflow-y: auto;
   padding: 10px;
   z-index: 1000;
+  border-radius: 8px; /* Rounded corners */
 }
 
-/* Search bar */
+/* Search bar styling */
 #search-bar {
-  width: 100%;
+  width: 100%; /* Make the search bar fill the container */
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Add space between search and location list */
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 4px; /* Round corners for search bar */
+  font-size: 14px; /* Adjust font size */
 }
 
-/* Location list styling */
+/* Styling for the list of locations */
 #location-list {
-  list-style: none;
+  list-style: none; /* Remove default list styling */
   padding: 0;
   margin: 0;
 }
 
+/* Each item in the location list */
 #location-list li {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
+  padding: 10px; /* Add padding for each item */
+  border-bottom: 1px solid #ddd; /* Light border at the bottom */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
 }
 
+/* Hover effect for each item in the list */
 #location-list li:hover {
-  background: #f0f0f0;
+  background: #f0f0f0; /* Change background color on hover */
+}
+
+/* Mobile responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .info-box {
+    max-width: 100%; /* Allow the info box to take full width on smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  #location-panel {
+    width: 90%; /* Make the location panel a bit narrower */
+  }
 }
