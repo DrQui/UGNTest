@@ -6,13 +6,40 @@ let map;
 let geocoder;
 
 async function fetchSheetData() {
-  const sheetUrl = "https://docs.google.com/spreadsheets/d/10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U/gviz/tq?tqx=out:json&sheet=UGN%20Mission%20Partners"
-};
-  const response = await fetch(sheetUrl);
-  const text = await response.text();
-  const json = JSON.parse(text.substring(47).slice(0, -2)); // Parse JSON response
-  return json.table.rows;
+  const sheetUrl = "https://docs.google.com/spreadsheets/d/10YA-1CHFMSlWdhf5J8jrMnJc9k9VyzWC0TU6Xousp6U/gviz/tq?tqx=out:json&sheet=UGN%20Mission%20Partners";
+
+  try {
+    const response = await fetch(sheetUrl);
+    const textData = await response.text();
+    const jsonData = JSON.parse(textData.substring(47).slice(0, -2));
+
+    // Process the data to extract relevant information
+    const locations = jsonData.table.rows.map(row => {
+      const name = row.c[0]?.v || "No name";
+      const address = row.c[1]?.v || "No address";
+      const lat = parseFloat(row.c[2]?.v);
+      const lng = parseFloat(row.c[3]?.v);
+
+      // Only include locations with valid coordinates
+      if (!isNaN(lat) && !isNaN(lng)) {
+        return { name, address, lat, lng };
+      }
+    }).filter(location => location !== undefined);
+
+    return locations;
+  } catch (error) {
+    console.error("Error fetching sheet data:", error);
+  }
 }
+
+// Usage example
+(async () => {
+  const locations = await fetchSheetData();
+  if (locations) {
+    console.log("Fetched locations:", locations);
+    // Initialize your map and add markers here
+  }
+})();
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
