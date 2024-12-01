@@ -49,18 +49,23 @@ function initMap() {
 
   geocoder = new google.maps.Geocoder();
 
-  fetchSheetData()
+ fetchSheetData()
     .then(rows => {
-      rows.forEach(row => {
-        const name = row.c[0]?.v || "No name";
-        const address = row.c[1]?.v || "No address";
-        const website = row.c[4]?.v || "No website";
-        const phone = row.c[5]?.v || "No phone";
-        const email = row.c[6]?.v || "No email";
-        const hours = row.c[8]?.v || "No working hours";
-        const description = row.c[9]?.v || "No description";
-        const image = row.c[10]?.v || "";
-        const type = row.c[7]?.v || "default"; // Type column for custom icons
+        rows.forEach(row => {
+            const name = row.c[0]?.v || "No name";          // Column A (Name)
+            const latitude = row.c[1]?.v || "No latitude";   // Column B (Latitude)
+            const longitude = row.c[2]?.v || "No longitude"; // Column C (Longitude)
+            const address = row.c[3]?.v || "No address";     // Column D (Address)
+            const website = row.c[4]?.v || "No website";     // Column E (Website)
+            const phone = row.c[5]?.v || "No phone";         // Column F (Phone)
+            const email = row.c[6]?.v || "No email";         // Column G (Email)
+            const hours = row.c[7]?.v || "No working hours"; // Column H (Working Hours)
+            const description = row.c[8]?.v || "No description"; // Column I (Description)
+            const image = row.c[9]?.v || "";                // Column J (Image)
+            const type = row.c[10]?.v || "default";         // Column K (Type for custom icons)
+        });
+    });
+
 
         const infoContent = `
   <div style="max-width: 300px; padding: 15px; background-color: #f0f0f0; border: 1px solid black; border-radius: 8px;">
