@@ -87,17 +87,19 @@ function geocodeAddress(address, name, infoContent, type) {
     if (status === "OK") {
       const location = results[0].geometry.location;
 
-      const marker = new google.maps.Marker({
-        map: map,
+      // Create AdvancedMarkerElement for custom markers
+      const marker = new google.maps.marker.AdvancedMarkerElement({
         position: location,
+        map: map,
         title: name,
-        icon: getDefaultIcon(type), // Add custom icon here
+        icon: getDefaultIcon(type), // Custom icon
       });
 
       const infoWindow = new google.maps.InfoWindow({
         content: infoContent,
       });
 
+      // Attach a click event to the marker
       marker.addListener("click", () => {
         infoWindow.open(map, marker);
       });
