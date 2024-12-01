@@ -54,13 +54,13 @@ function initMap() {
       rows.forEach(row => {
         const name = row.c[0]?.v || "No name";
         const address = row.c[1]?.v || "No address";
-        const website = row.c[2]?.v || "No website";
-        const phone = row.c[3]?.v || "No phone";
-        const email = row.c[4]?.v || "No email";
-        const hours = row.c[5]?.v || "No working hours";
-        const description = row.c[6]?.v || "No description";
-        const image = row.c[7]?.v || "";
-        const type = row.c[8]?.v || "default"; // Type column for custom icons
+        const website = row.c[4]?.v || "No website";
+        const phone = row.c[5]?.v || "No phone";
+        const email = row.c[6]?.v || "No email";
+        const hours = row.c[8]?.v || "No working hours";
+        const description = row.c[9]?.v || "No description";
+        const image = row.c[10]?.v || "";
+        const type = row.c[7]?.v || "default"; // Type column for custom icons
 
         const infoContent = `
   <div style="max-width: 300px; padding: 15px; background-color: #f0f0f0; border: 1px solid black; border-radius: 8px;">
