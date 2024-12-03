@@ -96,7 +96,7 @@
 
 /* Hover effect for each item in the list */
 #location-list li:hover {
-  background: #f0f0f0; /* Change background color on hover */
+  background: ##deb940; /* Change background color on hover */
 }
 
 /* Mobile responsiveness for smaller screens */
